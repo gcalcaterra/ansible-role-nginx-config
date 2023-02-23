@@ -113,4 +113,9 @@
         state: enforcing
       check_mode: true
       register: selinux
+        when:
+          - nginx_config_selinux | bool
+          - ('selinux' in ansible_facts)
+          - ansible_facts['selinux']['mode'] is defined
+          - ansible_facts['os_family'] in ['RedHat', 'Suse']
       failed_when: (selinux is changed) or (selinux is failed)

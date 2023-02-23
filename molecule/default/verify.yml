@@ -105,3 +105,12 @@
       check_mode: true
       register: conf
       failed_when: (conf is changed) or (conf is failed)
+      
+    #Check SELinux is in enforcing mode, as per defined in vars in converge
+    - name: Enable SELinux
+      ansible.posix.selinux:
+        policy: targeted
+        state: enforcing
+      check_mode: true
+      register: selinux
+      failed_when: (selinux is changed) or (selinux is failed)
